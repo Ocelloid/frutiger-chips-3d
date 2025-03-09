@@ -2,7 +2,7 @@
 import React from "react";
 import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import type { Mesh } from "three";
-import { useControls } from "leva";
+import { useControls, folder } from "leva";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 
@@ -13,16 +13,23 @@ export default function Chip() {
   const materialProps = useControls({
     thickness: { value: 0.2, min: 0, max: 1, step: 0.05 },
     roughness: { value: 0.5, min: 0, max: 1, step: 0.05 },
-    transmission: { value: 0.5, min: 0, max: 1, step: 0.05 },
+    transmission: { value: 1, min: 0, max: 1, step: 0.05 },
     ior: { value: 1.5, min: 0, max: 3, step: 0.05 },
     chromaticAbberation: { value: 0.5, min: 0, max: 1, step: 0.05 },
     backside: { value: true },
   });
+  const rotateControls = useControls({
+    rotation: folder({
+      x: { value: 0, min: 0, max: 1, step: 0.05 },
+      y: { value: 0.2, min: 0, max: 1, step: 0.05 },
+      z: { value: 0, min: 0, max: 1, step: 0.05 },
+    }),
+  });
   useFrame((_state, delta) => {
     if (!chipRef.current) return;
-    chipRef.current.rotation.y += delta;
-    chipRef.current.rotation.x += delta;
-    chipRef.current.rotation.z -= delta;
+    chipRef.current.rotation.x += delta * rotateControls.x;
+    chipRef.current.rotation.y += delta * rotateControls.y;
+    chipRef.current.rotation.z += delta * rotateControls.z;
   });
   return (
     <mesh
