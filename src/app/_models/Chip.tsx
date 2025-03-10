@@ -46,9 +46,9 @@ export default function Chip({
       >
         <MeshTransmissionMaterial
           thickness={1}
-          roughness={0}
+          roughness={0.15}
           transmission={1}
-          ior={1}
+          ior={0.85}
           chromaticAberration={0.2}
           backside={false}
         />
