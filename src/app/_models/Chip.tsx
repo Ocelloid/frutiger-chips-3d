@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
+import { Float, MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
 import type { Mesh, Euler, EulerOrder } from "three";
 import { Vector3 } from "three";
 import { easing } from "maath";
@@ -34,24 +34,26 @@ export default function Chip({
   });
 
   return (
-    <mesh
-      scale={scale ?? new Vector3(0.01, 0.009, 0.0075)}
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
-      geometry={chipMesh.geometry}
-      position={position}
-      rotation={rotation}
-      ref={chipRef}
-    >
-      <MeshTransmissionMaterial
-        thickness={1}
-        roughness={0}
-        transmission={1}
-        ior={1}
-        chromaticAberration={0.2}
-        backside={false}
-      />
-    </mesh>
+    <Float>
+      <mesh
+        scale={scale ?? new Vector3(0.01, 0.009, 0.0075)}
+        onPointerEnter={() => setHovered(true)}
+        onPointerLeave={() => setHovered(false)}
+        geometry={chipMesh.geometry}
+        position={position}
+        rotation={rotation}
+        ref={chipRef}
+      >
+        <MeshTransmissionMaterial
+          thickness={1}
+          roughness={0}
+          transmission={1}
+          ior={1}
+          chromaticAberration={0.2}
+          backside={false}
+        />
+      </mesh>
+    </Float>
   );
 }
 
